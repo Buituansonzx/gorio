@@ -1,0 +1,2 @@
+# Add this to your ~/.zshrc or ~/.bashrc
+alias clear-homestay="cd /Users/macos/Documents/Homestay && docker exec honestay_php_fpm bash -c 'cd /var/www/html/homestay-api && php artisan optimize:clear' && docker exec honestay_php_fpm php -r 'if (function_exists(\"opcache_reset\")) opcache_reset();' && echo '✅ Cache cleared!'"

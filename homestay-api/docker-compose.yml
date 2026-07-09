@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        tty: true
+        ports:
+            -   "8002:80"
+        volumes:
+            - .:/var/www/html
+        depends_on:
+            - mysql
+
+    mysql:
+        image: mysql:8.0
+        restart: unless-stopped
+        ports:
+            - "${MYSQL_PORT:-3310}:3306"
+        volumes:
+            - ./_docker/mysql/:/docker-entrypoint-initdb.d/
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-root}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE:-gorio_db}"
+            MYSQL_USER: "${MYSQL_USER:-app}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD:-secret}"
+
+
+
+
